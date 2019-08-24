@@ -33,3 +33,31 @@ colorPersonalizado.addEventListener('change',
 
   })
 );
+
+var paleta = document.getElementById("paleta");
+var grillaPixeles = document.getElementById("grilla-pixeles");
+
+//Función para crear la paleta de colores dinámicamente
+
+function crearPaleta() {
+  for (var i = 0; i < nombreColores.length; i++) {
+      var color = document.createElement("div");
+      paleta.appendChild(color);
+      color.style.backgroundColor = nombreColores[i];
+      color.className = "color-paleta";
+      // color.addEventListener("click", guardarColor)
+  }
+};
+
+// Función para crear la grilla con los píxeles dinámicamente
+
+function crearPixeles() {
+    for (var i = 0; i < 1750; i++) {
+        var pixel = document.createElement("div");
+        grillaPixeles.appendChild(pixel);
+    };
+     
+};
+
+crearPaleta();
+crearPixeles();
