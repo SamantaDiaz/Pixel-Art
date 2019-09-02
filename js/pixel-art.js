@@ -20,23 +20,30 @@ var nombreColores = ['White', 'LightYellow',
   'DimGray', 'LightSlateGray', 'DarkSlateGray', 'Black'
 ];
 
-// Variable para guardar el elemento 'color-personalizado'
-// Es decir, el que se elige con la rueda de color.
+//Declaración de variables
 var colorPersonalizado = document.getElementById('color-personalizado');
-
 var indicadorColor = document.getElementById("indicador-de-color");
 var colorActual;
-
-colorPersonalizado.addEventListener('change', 
-  (function() {
-    // Se guarda el color de la rueda en colorActual
-    colorActual = colorPersonalizado.value;
-    indicadorColor.style.backgroundColor = colorActual;
-  })
-);
-
 var paleta = document.getElementById("paleta");
 var grillaPixeles = document.getElementById("grilla-pixeles");
+var mApretado = false;
+var pixeles = [];
+var botonBorrar = document.getElementById("borrar");
+var batmanImg = document.getElementById("batman");
+var flashImg = document.getElementById("flash");
+var wonderImg = document.getElementById("wonder");
+var invisibleImg = document.getElementById("invisible");
+var bGuardar = document.getElementById("guardar");
+
+//Asignación de eventos
+botonBorrar.addEventListener("click", borrarGrilla);
+batmanImg.addEventListener("click", dibujarSuper);
+flashImg.addEventListener("click", dibujarSuper);
+wonderImg.addEventListener("click", dibujarSuper);
+invisibleImg.addEventListener("click", dibujarSuper);
+bGuardar.addEventListener("click", guardarPixelArt);
+
+//Declaración de funciones
 
 //Función para crear la paleta de colores dinámicamente
 function crearPaleta() {
@@ -49,17 +56,25 @@ function crearPaleta() {
   }
 };
 
+// Guarda el color de la rueda en colorActual
+colorPersonalizado.addEventListener('change', 
+  (function() {
+    colorActual = colorPersonalizado.value;
+    indicadorColor.style.backgroundColor = colorActual;
+  })
+);
+
 // Función para crear la grilla con los píxeles dinámicamente
 function crearPixeles() {
     for (var i = 0; i < 1750; i++) {
         var pixel = document.createElement("div");
         grillaPixeles.appendChild(pixel);
+        pixeles.push(pixel);
         pixel.addEventListener("click", pintar);
         pixel.addEventListener("mousedown", presionado);
         pixel.addEventListener("mouseup", presionado);
         pixel.addEventListener("mouseover", pintarEnMovimiento);
     };
-     
 };
 
 //Función que guarda el color en el indicador de color
@@ -73,19 +88,45 @@ function pintar(e) {
   e.target.style.backgroundColor = colorActual;
 };
 
-var mApretado = false;
-
+//Función que permite saber si el mouse se encuentra presionado o no
 function presionado(e) {
   mApretado = !mApretado;
   console.log(mApretado);
 };
 
+//Función que permite pintar en movimiento teniendo en cuenta cuando seapreta y suelta el mouse
 function pintarEnMovimiento(e) {
   if(mApretado) {
     e.target.style.backgroundColor = colorActual;
   };
-}
+};
 
+//Función que permite borrar(cambiar el backgroundColor a blanco) la grilla
+function borrarGrilla() {
+  var confirmacion = confirm("¿Desea borrar esta magnífica pieza de arte?");
+  if(confirmacion){
+    for(var i = 0; i < pixeles.length; i++) {
+      pixeles[i].style.backgroundColor = "white";
+    };
+  }
+};
 
-crearPaleta();
-crearPixeles();
+//Función que permite cargar el superheroe seleccionado
+function dibujarSuper(e) {
+  var superHeroe;
+  if (e.target.id === 'batman') {
+    superHeroe = batman;
+  } else if (e.target.id === 'wonder') {
+    superHeroe = wonder;
+  } else if (e.target.id === "flash") {
+    superHeroe = flash;
+  } else if (e.target.id === "invisible"){
+    superHeroe = invisible;
+  }
+  cargarSuperheroe(superHeroe);
+};
+
+window.onload(
+  crearPaleta(),
+  crearPixeles(),
+)

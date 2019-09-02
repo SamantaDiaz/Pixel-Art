@@ -21,6 +21,7 @@ div {
   line-height: 0%;
   position: relative;
   vertical-align: sub;
+  transition: background-color 500ms linear;
 }
 
 button {
@@ -120,6 +121,7 @@ main {
   flex-direction: row-reverse
 
 }
+
 #container, li, .imgs {
  display: flex;
  align-items:center;
@@ -136,6 +138,11 @@ img {
   max-width: 100%;
   height: auto;
 }
+
+.imgs li:hover{
+  cursor: pointer;
+}
+
  .input-color li {
    margin: 10px 0;
    justify-content: space-between;
